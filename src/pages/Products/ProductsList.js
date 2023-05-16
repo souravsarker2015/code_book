@@ -1,25 +1,38 @@
 import {FilterBar} from "./components/FilterBar";
 import {useEffect, useState} from "react";
 import {ProductCard} from "../../components";
+import {useLocation} from "react-router-dom";
+import {UseTitle} from "../../hooks/UseTitle"
+import {UseFilter} from "../../context";
 
 export const ProductsList = () => {
-    const [show, setShow] = useState(false)
-    const [products, setProducts] = useState([])
 
+    const {products,initialProductList} = UseFilter()
+    // console.log(productList)
+
+    const [show, setShow] = useState(false);
+    // const [products, setProducts] = useState([]);
+    const search = useLocation().search;
+    const searchTerm = new URLSearchParams(search).get("q");
+    // console.log(searchTerm);
+    UseTitle("Explore all books")
     useEffect(() => {
         async function fetchProducts() {
-            const response = await fetch("http://localhost:8000/products")
+            const response = await fetch(`http://localhost:8000/products?name_like=${searchTerm ? searchTerm : ""}`)
             const data = await response.json()
-            return setProducts(data)
+            // setProducts(data)
+            initialProductList(data)
+
         }
 
         fetchProducts();
-    }, [])
+    }, [searchTerm])//eslint-disable-line
 
     return (
         <main>
             <section className="my-5">
                 <div className="my-5 flex justify-between">
+                    {/*<span className="text-2xl font-semibold dark:text-slate-100 mb-5">All eBooks ({products.length})</span>*/}
                     <span className="text-2xl font-semibold dark:text-slate-100 mb-5">All eBooks ({products.length})</span>
                     <span>
                         <button onClick={() => setShow(!show)} id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-gray-100 rounded-lg hover:bg-gray-200 dark:text-white dark:bg-gray-600 dark:hover:bg-gray-700" type="button">
@@ -29,6 +42,7 @@ export const ProductsList = () => {
                 </div>
 
                 <div className="flex flex-wrap justify-center lg:flex-row">
+                    {/*{products.map((product) => (*/}
                     {products.map((product) => (
                         <ProductCard key={product.id} product={product}/>
                     ))}
