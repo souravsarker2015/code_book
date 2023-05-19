@@ -49,7 +49,7 @@ export const CartProvider = ({children}) => {
 
     const value = {
         cartList: state.cartList,
-        total: 0,
+        total: state.total,
         addToCart,
         removeFromCart,
         clearCart

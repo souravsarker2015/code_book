@@ -7,7 +7,7 @@ import {UseFilter} from "../../context";
 
 export const ProductsList = () => {
 
-    const {products,initialProductList} = UseFilter()
+    const {products, initialProductList} = UseFilter()
     // console.log(productList)
 
     const [show, setShow] = useState(false);
@@ -42,15 +42,13 @@ export const ProductsList = () => {
                 </div>
 
                 <div className="flex flex-wrap justify-center lg:flex-row">
-                    {/*{products.map((product) => (*/}
-                    {products.map((product) => (
-                        <ProductCard key={product.id} product={product}/>
-                    ))}
 
-
-                    {/*{products.map((product) => (*/}
-                    {/*    <ProductCard key={product.id} product={product}/>*/}
-                    {/*))}*/}
+                    {
+                        products.map((product) => (
+                                <ProductCard key={product.id} product={product}/>
+                            )
+                        )
+                    }
                 </div>
             </section>
             {/*<FilterBar/>*/}
