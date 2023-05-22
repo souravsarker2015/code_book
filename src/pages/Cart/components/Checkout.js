@@ -1,26 +1,21 @@
 import {UseCart} from "../../../context";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-// import {OrderPage} from "../../Order/OrderPage";
-// import {Navigate} from "react-router-dom";
+import {createOrder, getUser} from "../../../services";
+
 
 export const Checkout = ({setCheckout}) => {
     const navigate = useNavigate()
     const {cartList, total, clearCart} = UseCart();
     const [user, setUser] = useState({})
-    const token = JSON.parse(sessionStorage.getItem("token"))
-    const cbid = JSON.parse(sessionStorage.getItem("cbid"))
+
     useEffect(() => {
-        async function getUser() {
-            const response = await fetch(`http://localhost:8000/600/users/${cbid}`, {
-                method: "GET",
-                headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`}
-            });
-            const data = await response.json();
+        async function fetchData() {
+            const data = await getUser();
             setUser(data)
         }
 
-        getUser();
+        fetchData();
 
     }, []) //eslint-disable-line
 
@@ -28,24 +23,7 @@ export const Checkout = ({setCheckout}) => {
         event.preventDefault();
 
         try {
-            const order = {
-                cartList: cartList,
-                amount_paid: total,
-                quantity: cartList.length,
-                user: {
-                    name: user.name,
-                    email: user.email,
-                    id: user.id
-                }
-            };
-
-            const response = await fetch("http://localhost:8000/660/orders", {
-                method: "POST",
-                headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`},
-                body: JSON.stringify(order)
-            });
-
-            const data = await response.json();
+            const data = await createOrder(cartList, total, user)
             clearCart();
             navigate('/order-summary', {state: {status: true, data: data}});
         } catch (error) {

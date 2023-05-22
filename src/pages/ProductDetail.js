@@ -3,35 +3,34 @@ import {Rating} from "../components";
 import {useParams} from "react-router-dom";
 import {UseTitle} from "../hooks/UseTitle";
 import {UseCart} from "../context";
+import {getProduct} from "../services";
 
 export const ProductDetail = () => {
-    const [product, setProduct] = useState({})
-    const {id} = useParams()
-    UseTitle(product.name)
-    const {cartList, addToCart, removeFromCart} = UseCart()
-    const [inCart, setInCart] = useState(false)
+    const [product, setProduct] = useState({});
+    const {id} = useParams();
+    UseTitle(product.name);
+    const {cartList, addToCart, removeFromCart} = UseCart();
+    const [inCart, setInCart] = useState(false);
 
     useEffect(() => {
         async function fetchProduct() {
-            const response = await fetch(`http://localhost:8000/products/${id}`)
-            const data = await response.json()
-            setProduct(data)
+            const data = await getProduct(id);
+            setProduct(data);
         }
 
         fetchProduct();
     });
 
     useEffect(() => {
-        const productInCart = cartList.find(item => item.id === product.id)
+        const productInCart = cartList.find(item => item.id === product.id);
 
         if (productInCart) {
-            setInCart(true)
+            setInCart(true);
         } else {
-            setInCart(false)
+            setInCart(false);
         }
 
     }, [cartList, product.id]);
-
     return (
         <main>
             <section>

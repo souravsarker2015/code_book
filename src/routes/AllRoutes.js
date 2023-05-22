@@ -1,9 +1,10 @@
 import {Routes, Route} from "react-router-dom";
-import {CartPage, HomePage, Login, ProductDetail, ProductsList, Register} from "../pages";
+import {CartPage, DashboardPage, HomePage, Login, PageNotFound, ProductDetail, ProductsList, Register} from "../pages";
 import {ProtectedRoute} from "./ProtectedRoute";
 import {OrderPage} from "../pages/Order/OrderPage";
 
 export const AllRoutes = () => {
+
     return (
         <>
             <Routes>
@@ -17,6 +18,8 @@ export const AllRoutes = () => {
 
                 <Route path={'cart'} element={<ProtectedRoute><CartPage/></ProtectedRoute>}/>
                 <Route path={'order-summary'} element={<ProtectedRoute><OrderPage/></ProtectedRoute>}/>
+                <Route path={'dashboard'} element={<ProtectedRoute><DashboardPage/></ProtectedRoute>}/>
+                <Route path={'*'} element={<PageNotFound/>}/>
             </Routes>
         </>
     );
