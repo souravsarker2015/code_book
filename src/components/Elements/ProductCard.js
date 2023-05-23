@@ -4,7 +4,7 @@ import {UseCart} from "../../context";
 import {useEffect, useState} from "react";
 
 export const ProductCard = ({product}) => {
-    const {id, name, overview, price, rating, image_local, best_seller} = product;
+    const {id, name, overview, price, rating, poster, best_seller} = product;
     const {cartList, addToCart, removeFromCart} = UseCart()
     const [inCart, setInCart] = useState(false)
 
@@ -26,7 +26,7 @@ export const ProductCard = ({product}) => {
                     <span className="absolute top-4 left-2 px-2 bg-orange-500 bg-opacity-90 text-white rounded">Best Seller</span>
                 )}
 
-                <img className="rounded-t-lg w-full h-64" src={image_local} alt='feature product img'/>
+                <img className="rounded-t-lg w-full h-64" src={poster} alt='feature product img'/>
             </Link>
 
             <div className="p-5">
