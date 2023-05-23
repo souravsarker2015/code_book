@@ -17,7 +17,6 @@ export const DropdownLoggedIn = ({setDropdown}) => {
                 toast.error(error.message, {closeButton: true, position: "bottom-right"});
             }
         }
-
         fetchData();
     }, [handleLogout])
 
