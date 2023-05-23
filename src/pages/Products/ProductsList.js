@@ -1,4 +1,5 @@
 import {useLocation} from "react-router-dom";
+import {toast} from "react-toastify";
 import {UseTitle} from "../../hooks/UseTitle"
 import {useEffect, useState} from "react";
 import {FilterBar} from "./components/FilterBar";
@@ -19,9 +20,13 @@ export const ProductsList = () => {
     UseTitle("Explore all books");
     useEffect(() => {
         async function fetchProducts() {
-            const data = await getProductList(searchTerm);
-            // setProducts(data)
-            initialProductList(data);
+            try {
+                const data = await getProductList(searchTerm);
+                // setProducts(data)
+                initialProductList(data);
+            } catch (error) {
+                toast.error(error.message, {closeButton: true, position: "bottom-right"});
+            }
 
         }
 
