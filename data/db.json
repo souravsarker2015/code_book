@@ -771,6 +771,12 @@
       "password": "$2a$10$IljxOpU96bRGLGboNZ5pcOmUZTQqMJN1mGFt2SCf4zLnPnfrGpQqm",
       "name": "sourov",
       "id": 2
+    },
+    {
+      "email": "example@gmail.com",
+      "password": "$2a$10$vKKtHgLGnB7kcbKMqHMbkudZ/yUcq55549b1TeMHh1zq1f2eArWVe",
+      "name": "example",
+      "id": 3
     }
   ]
 }
